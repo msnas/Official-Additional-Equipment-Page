@@ -1,0 +1,1 @@
+200	change_equipment_page	0	0	0	0	NONE								DISABLE_BY_POINT_UP		NONE				0	0	NORMAL	0	1	1	0

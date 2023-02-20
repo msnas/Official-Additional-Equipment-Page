@@ -1,0 +1,1 @@
+EQUIPMENT_TITLE_NAME	Equipment Window

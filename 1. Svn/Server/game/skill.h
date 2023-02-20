@@ -1,0 +1,7 @@
+// Search for:
+	GUILD_SKILL_START = 151,
+
+// Add before:
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	SKILL_ADDITIONAL_PAGE = 200,
+#endif

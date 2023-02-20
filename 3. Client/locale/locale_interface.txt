@@ -1,0 +1,2 @@
+EQUIPMENT_SLOT_1	First Equipment Page
+EQUIPMENT_SLOT_2	Second Equipment Page

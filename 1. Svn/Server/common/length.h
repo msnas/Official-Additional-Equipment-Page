@@ -1,0 +1,118 @@
+// Search for:
+enum EWearPositions
+{
+	WEAR_BODY,		// 0
+	WEAR_HEAD,		// 1
+	WEAR_FOOTS,		// 2
+	WEAR_WRIST,		// 3
+	WEAR_WEAPON,	// 4
+	WEAR_NECK,		// 5
+	WEAR_EAR,		// 6
+	WEAR_UNIQUE1,	// 7
+	WEAR_UNIQUE2,	// 8
+	WEAR_ARROW,		// 9
+	WEAR_SHIELD,	// 10
+    WEAR_ABILITY1,  // 11
+    WEAR_ABILITY2,  // 12
+    WEAR_ABILITY3,  // 13
+    WEAR_ABILITY4,  // 14
+    WEAR_ABILITY5,  // 15
+    WEAR_ABILITY6,  // 16
+    WEAR_ABILITY7,  // 17
+    WEAR_ABILITY8,  // 18
+	WEAR_COSTUME_BODY,	// 19
+	WEAR_COSTUME_HAIR,	// 20
+	
+	WEAR_RING1,			// 21	: ½Å±Ô ¹ÝÁö½½·Ô1 (¿ÞÂÊ)
+	WEAR_RING2,			// 22	: ½Å±Ô ¹ÝÁö½½·Ô2 (¿À¸¥ÂÊ)
+
+	WEAR_COSTUME_MOUNT,
+
+	WEAR_BELT,			// 23	: ½Å±Ô º§Æ®½½·Ô
+
+	WEAR_MAX = 32	// 
+};
+
+// Replace for:
+enum EWearPositions
+{
+	WEAR_BODY,			// 0
+	WEAR_HEAD,			// 1
+	WEAR_FOOTS,			// 2
+	WEAR_WRIST,			// 3
+	WEAR_WEAPON,		// 4
+	WEAR_NECK,			// 5
+	WEAR_EAR,			// 6
+#ifndef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	WEAR_UNIQUE1,       // 7
+	WEAR_UNIQUE2,       // 8
+#endif
+	WEAR_ARROW,			// 7
+	WEAR_SHIELD,		// 8
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	WEAR_BELT,			// 9
+	WEAR_PENDANT,		// 10 (PENDANT)
+	WEAR_GLOVES,		// 11 (GLOVES)
+
+	// Second Equipment
+	WEAR_SECOND_BODY,	// 12
+	WEAR_SECOND_HEAD,	// 13
+	WEAR_SECOND_FOOTS,	// 14
+	WEAR_SECOND_WRIST,	// 15
+	WEAR_SECOND_WEAPON,	// 16
+	WEAR_SECOND_NECK,	// 17
+	WEAR_SECOND_EAR,	// 18
+	WEAR_SECOND_ARROW,	// 19
+	WEAR_SECOND_SHIELD,	// 20
+	WEAR_SECOND_BELT,	// 21
+	WEAR_SECOND_PENDANT,	// 22
+	WEAR_SECOND_GLOVES,	// 23 
+#endif
+
+#ifndef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	WEAR_ABILITY1,		// 11 - 10
+	WEAR_ABILITY2,		// 12 - 11
+	WEAR_ABILITY3,		// 13 - 12
+	WEAR_ABILITY4,		// 14 - 13
+	WEAR_ABILITY5,		// 15 - 14
+	WEAR_ABILITY6,		// 16 - 15
+	WEAR_ABILITY7,		// 17 - 16
+	WEAR_ABILITY8,		// 18 - 17
+#endif
+
+	WEAR_COSTUME_BODY,	// 24
+	WEAR_COSTUME_HAIR,	// 25
+#ifdef __ACCE_SYSTEM__
+	WEAR_COSTUME_ACCE,	// 26
+#endif
+
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	WEAR_UNIQUE1,		// 27
+	WEAR_UNIQUE2,		// 28
+#else
+	WEAR_RING1,			// 22 - 21	:New ring slot 1 (left)
+	WEAR_RING2,			// 23 - 22	: New ring slot 2 (right)
+	WEAR_BELT,			// 24 - 21	: New belt slot
+#endif
+
+	WEAR_MAX_NUM = 32,
+};
+
+// Search for:
+enum EDragonSoulDeckType
+{
+	DRAGON_SOUL_DECK_0,
+
+// Add before:
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+enum EQUIPMENT_PAGE
+{
+	FIRST_TYPE_EQUIPMENT,
+	SECOND_TYPE_EQUIPMENT,
+
+	BASE_TYPE_EQUIPMENT = -1,
+
+	ITEM_ADDITIONAL_PAGE_NOT_TRADEABLE = 38306,
+	ITEM_ADDITIONAL_PAGE_TRADEABLE = 76055,
+};
+#endif

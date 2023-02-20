@@ -1,0 +1,1 @@
+200	SUPPORT	Change Equipment Page			Switch between equipment pages.					CANNOT_LEVEL_UP|TOGGLE		change_equipment											

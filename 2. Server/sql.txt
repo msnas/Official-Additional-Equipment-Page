@@ -1,0 +1,14 @@
+[SKILL_PROTO]
+Duplicate Combo's skill and change the name to Equipment Page and dwVnum to 200
+
+Here's an example:
+200	Equipment Page	0	0	0	0	NONE								DISABLE_BY_POINT_UP	NONE_MAX	NONE			NONE_MAX					0	0	NORMAL	0	1	0	0
+
+//
+
+[PLAYER and PLAYER_DELETED]
+Add equip_index as int and NOT NULL with DEFAULT 0
+It needs to be AFTER horse_skill_point
+
+Here's an example:
+`equip_index` int(11) NOT NULL DEFAULT 0,
