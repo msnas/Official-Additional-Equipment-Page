@@ -60,12 +60,13 @@
 		std::map<int, LPITEM>	secondEquip;
 
 	public:
-		void			ChangeEquip(int index, bool bSkipUpdate = false);
+		void			ChangeEquip(int index, bool bIgnore = false);
 
 		void			SetEquipIndex(int index) { m_points.equip_index = index; };
 		int				GetEquipIndex() { return m_points.equip_index; };
 		int				GetEquipLoadTime() const { return m_iEquipLoadTime; }
 		void			SetEquipLoadTime() { m_iEquipLoadTime = thecore_pulse(); }
+		int				GetEquipIndexByWear(int wear);
 		void			RemoveEquipSlot(int pos);
 		void			SetEquipSlot(int pos, LPITEM item);
 		LPITEM			GetEquipWear(int wear);

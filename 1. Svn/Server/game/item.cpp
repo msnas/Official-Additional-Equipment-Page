@@ -1,4 +1,14 @@
 // Search for:
+	m_dwMaskVnum(0), m_dwSIGVnum (0)
+
+// Add after:
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	, m_bEquipAlreadyStopped(false)
+#endif
+
+// Search for:
+
+// Search for:
 	else if (GetType() == ITEM_RING)
 	{
 		if (ch->GetWear(WEAR_RING1))
@@ -274,12 +284,29 @@
 #endif
 
 // Search for:
+	m_wCell = INVENTORY_MAX_NUM + bWearCell;
+
+// Add after:
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+	if (ch->GetEquipIndexByWear(bWearCell) != ch->GetEquipIndex())
+	{
+		m_bEquipAlreadyStopped = true;
+		Save();
+		return true;
+	}
+
+	m_bEquipAlreadyStopped = false;
+#endif
+
+
+// Search for:
 bool CItem::Unequip()
 
 // Add before:
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
 void CItem::StartEquipEvent()
 {
+	m_bEquipAlreadyStopped = false;
 	ModifyPoints(true);
 	StartUniqueExpireEvent();
 	if (-1 != GetProto()->cLimitTimerBasedOnWearIndex)
@@ -295,6 +322,9 @@ void CItem::StartEquipEvent()
 
 void CItem::StopEquipEvent()
 {
+	if (m_bEquipAlreadyStopped)
+		return;
+
 	if (!m_pOwner || GetCell() < INVENTORY_MAX_NUM)
 	{
 		sys_err("%s %u m_pOwner %p, GetCell %d",GetName(), GetID(), get_pointer(m_pOwner), GetCell());
@@ -332,4 +362,5 @@ void CItem::StopEquipEvent()
 // Add before:
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
 	m_pOwner->RemoveEquipSlot(GetCell() - INVENTORY_MAX_NUM);
+	m_bEquipAlreadyStopped = false;
 #endif

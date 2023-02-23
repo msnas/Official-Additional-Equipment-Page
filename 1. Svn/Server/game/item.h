@@ -6,3 +6,11 @@
 		void		StartEquipEvent();
 		void		StopEquipEvent();
 #endif
+
+// Search for:
+		DWORD		m_dwSIGVnum;
+
+// Add after:
+#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
+		bool		m_bEquipAlreadyStopped;
+#endif

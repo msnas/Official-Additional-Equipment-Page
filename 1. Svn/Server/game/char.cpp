@@ -179,6 +179,16 @@ LPITEM CHARACTER::GetEquipWear(int wear)
 	return m_pointsInstant.pItems[INVENTORY_MAX_NUM + bCell];
 }
 
+int CHARACTER::GetEquipIndexByWear(int wear)
+{
+	if (wear < WEAR_SECOND_BODY)
+		return FIRST_TYPE_EQUIPMENT;
+	else if (wear >= WEAR_SECOND_BODY && wear <= WEAR_SECOND_GLOVES)
+		return SECOND_TYPE_EQUIPMENT;
+
+	return GetEquipIndex();
+}
+
 void CHARACTER::RemoveEquipSlot(int pos)
 {
 	if (pos < WEAR_SECOND_BODY)
@@ -216,84 +226,83 @@ void CHARACTER::SetEquipSlot(int pos, LPITEM item)
 	}
 }
 
-void CHARACTER::ChangeEquip(int index, bool bSkipUpdate)
+void CHARACTER::ChangeEquip(int index, bool bIgnore)
 {
-	if (GetSkillLevel(SKILL_ADDITIONAL_PAGE) > 0)
+	if (GetSkillLevel(SKILL_ADDITIONAL_PAGE) == 0)
+		return;
+
+	if (GetExchange() || GetMyShop() || GetShopOwner() || IsOpenSafebox() || IsCubeOpen())
 	{
-		if (!bSkipUpdate)
-		{
-			if (GetExchange() || GetMyShop() || GetShopOwner() || IsOpenSafebox() || IsCubeOpen())
-			{
-				ChatPacket(CHAT_TYPE_INFO, "You can't change equipment page while you're doing something else.");
-				return;
-			}
-
-			if (index == GetEquipIndex())
-				return;
-		}
-
-		int iPulse = thecore_pulse();
-		if (iPulse - GetEquipLoadTime() < PASSES_PER_SEC(5))
-		{
-			ChatPacket(CHAT_TYPE_INFO, "You'll need to wait 5 seconds in order to do that again.");
-			return;
-		}
-
-		SetEquipIndex(index);
-
-		switch (index)
-		{
-			case FIRST_TYPE_EQUIPMENT:
-			{
-				if (secondEquip.size())
-				{
-					for (auto secondIndex = secondEquip.begin(); secondIndex != secondEquip.end(); ++secondIndex)
-						secondIndex->second->StopEquipEvent();
-				}
-
-				if (!bSkipUpdate)
-				{
-					if (firstEquip.size())
-					{
-						for (auto firstIndex = firstEquip.begin(); firstIndex != firstEquip.end(); ++firstIndex)
-							firstIndex->second->StartEquipEvent();
-					}
-				}
-			}
-			break;
-
-			case SECOND_TYPE_EQUIPMENT:
-			{
-				if (firstEquip.size())
-				{
-					for (auto firstIndex = firstEquip.begin(); firstIndex != firstEquip.end(); ++firstIndex)
-						firstIndex->second->StopEquipEvent();
-				}
-
-				if (!bSkipUpdate)
-				{
-					if (secondEquip.size())
-					{
-						for (auto secondIndex = secondEquip.begin(); secondIndex != secondEquip.end(); ++secondIndex)
-							secondIndex->second->StartEquipEvent();
-					}
-				}
-			}
-			break;
-		}
-
-		CheckMaximumPoints();
-		ComputeBattlePoints();
-		UpdatePacket();
-
-		SetEquipLoadTime();
-
-		if (!bSkipUpdate)
-		{
-			
-			ChatPacket(CHAT_TYPE_COMMAND, "SetEquipmentPage %d", index);
-			ChatPacket(CHAT_TYPE_INFO, "The equipment page was changed.");
-		}
+		ChatPacket(CHAT_TYPE_INFO, "You can't change equipment page while you're doing something else.");
+		return;
 	}
+
+	if (!bIgnore)
+	{
+		if (index == GetEquipIndex())
+			return;
+	}
+
+	int iPulse = thecore_pulse();
+	if (iPulse - GetEquipLoadTime() < PASSES_PER_SEC(5))
+	{
+		ChatPacket(CHAT_TYPE_INFO, "You'll need to wait 5 seconds in order to do that again.");
+		return;
+	}
+
+	SetEquipIndex(index);
+
+	switch (index)
+	{
+		case FIRST_TYPE_EQUIPMENT:
+		{
+			if (secondEquip.size())
+			{
+				for (auto secondIndex = secondEquip.begin(); secondIndex != secondEquip.end(); ++secondIndex)
+					secondIndex->second->StopEquipEvent();
+			}
+
+			if (firstEquip.size())
+			{
+				for (auto firstIndex = firstEquip.begin(); firstIndex != firstEquip.end(); ++firstIndex)
+					firstIndex->second->StartEquipEvent();
+			}
+		}
+		break;
+
+		case SECOND_TYPE_EQUIPMENT:
+		{
+			if (firstEquip.size())
+			{
+				for (auto firstIndex = firstEquip.begin(); firstIndex != firstEquip.end(); ++firstIndex)
+					firstIndex->second->StopEquipEvent();
+			}
+
+			if (secondEquip.size())
+			{
+				for (auto secondIndex = secondEquip.begin(); secondIndex != secondEquip.end(); ++secondIndex)
+					secondIndex->second->StartEquipEvent();
+			}
+		}
+		break;
+	}
+
+	
+	SetEquipLoadTime();
+
+	CheckMaximumPoints();
+	ComputeBattlePoints();
+	UpdatePacket();
+
+	if (IsAffectFlag(AFF_GWIGUM))
+		RemoveAffect(SKILL_GWIGEOM);
+
+	if (IsAffectFlag(AFF_GEOMGYEONG))
+		RemoveAffect(SKILL_GEOMKYUNG);
+
+	ChatPacket(CHAT_TYPE_COMMAND, "SetEquipmentPage %d", index);
+
+	if (!bIgnore)
+		ChatPacket(CHAT_TYPE_INFO, "The equipment page was changed.");
 }
 #endif

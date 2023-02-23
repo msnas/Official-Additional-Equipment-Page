@@ -75,7 +75,6 @@ int CHARACTER::GetEmptyDragonSoulInventory(LPITEM pItem) const
 								SkillLevelPacket();
 
 								ChangeEquip(FIRST_TYPE_EQUIPMENT, true);
-								ChatPacket(CHAT_TYPE_COMMAND, "SetEquipmentPage %d", FIRST_TYPE_EQUIPMENT);
 
 								ChatPacket(CHAT_TYPE_INFO, "The additional equipment page has been activated. You'll find it in the equipment window.");
 								item->SetCount(item->GetCount() - 1);
