@@ -1,0 +1,2 @@
+38306	ETC	icon/item/38306.tga
+76055	ETC	icon/item/38306.tga

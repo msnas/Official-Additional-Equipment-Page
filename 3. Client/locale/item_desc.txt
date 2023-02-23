@@ -1,0 +1,2 @@
+38306	Extra Equipment Page	You can wear 2 different equipment sets by switching between equipment pages. | You'll find the relevant skill under Secondary Skills. | Item is not tradeable.
+76055	Extra Equip. Page (t)	You can wear 2 different equipment sets by switching between equipment pages. | You'll find the relevant skill under Secondary Skills. | Item is tradeable.
