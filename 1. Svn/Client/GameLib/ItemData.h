@@ -92,7 +92,7 @@
 			WEARABLE_HAIR = (1 << 10),
 			WEARABLE_ABILITY = (1 << 11),
 			WEARABLE_COSTUME_BODY = (1 << 12),
-#ifdef __ACCE_SYSTEM__
+#ifdef ENABLE_ACCE_SYSTEM
 			WEARABLE_COSTUME_ACCE = (1 << 13),
 #endif
 #endif
