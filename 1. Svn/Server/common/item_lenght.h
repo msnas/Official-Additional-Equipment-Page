@@ -51,3 +51,5 @@ enum EItemWearableFlag
 #endif
 #endif
 };
+
+// ATENTION: It's crucial that this needs to be in the same position as ProtoReader.cpp (string arWearrFlag[]) and length.h (EWearPositions)
